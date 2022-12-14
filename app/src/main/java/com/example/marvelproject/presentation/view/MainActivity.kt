@@ -24,8 +24,6 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val vm = hiltViewModel<MainViewModel>()
 
-                vm.getCharacters()
-
                 NavHost(navController = navController, startDestination = MarvelProjectViews.ListView.route){
                     composable(MarvelProjectViews.ListView.route) {
                         ListView(vm){

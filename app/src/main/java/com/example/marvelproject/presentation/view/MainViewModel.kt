@@ -32,7 +32,11 @@ class MainViewModel @Inject constructor(private val marvelApiRepository: MarvelA
     val loading: State<Boolean>
         get() = _loading
 
-    fun getCharacters() {
+    init{
+        getCharacters()
+    }
+
+    private fun getCharacters() {
         _loading.value = true
 
         viewModelScope.launch(Dispatchers.IO) {
