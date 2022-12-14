@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Marvel Project</string>
+    <string name="series_label">Series</string>
+    <string name="comics_label">Comics</string>
+    <string name="details_label">Details</string>
+</resources>
+
