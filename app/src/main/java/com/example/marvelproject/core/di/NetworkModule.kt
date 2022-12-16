@@ -13,6 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.sql.Timestamp
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -45,11 +46,14 @@ object NetworkModule {
                 chain.proceed(newRequest)
             }
             .addInterceptor( HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY) )
+            .readTimeout(10L,TimeUnit.SECONDS)
+            .writeTimeout(10L,TimeUnit.SECONDS)
             .build()
 
     @Provides
     @Singleton
-    fun provideRetrofit(client : OkHttpClient): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(client : OkHttpClient): Retrofit =
+        Retrofit.Builder()
         .client(client)
         .baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
@@ -57,5 +61,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesDrinkApi(retrofit: Retrofit): IMarvelApi = retrofit.create(IMarvelApi::class.java)
+    fun providesDrinkApi(retrofit: Retrofit): IMarvelApi =
+        retrofit.create(IMarvelApi::class.java)
 }

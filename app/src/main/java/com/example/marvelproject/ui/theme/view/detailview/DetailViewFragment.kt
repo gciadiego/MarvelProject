@@ -1,40 +1,28 @@
-package com.example.marvelproject.presentation.view.detailview
+package com.example.marvelproject.ui.theme.view.detailview
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import com.example.marvelproject.R
-import com.example.marvelproject.domain.model.SeriesAndComicsDomain
 import com.example.marvelproject.ui.theme.Background
 import com.example.marvelproject.ui.theme.CardLeftColor
 import com.example.marvelproject.ui.theme.CardRightColor
 import com.example.marvelproject.ui.theme.CardSeparator
-import com.example.marvelproject.presentation.view.MainViewModel
+import com.example.marvelproject.ui.theme.view.MainViewModel
 
 @Composable
-fun DetailView(vm: MainViewModel, navigateToList: () -> Unit) {
+fun DetailView(vm: MainViewModel) {
     val lazyList = remember {
         if(vm.buttonSelected.value == "Series"){
             vm.currentCharacter.value?.series
@@ -72,7 +60,7 @@ fun DetailView(vm: MainViewModel, navigateToList: () -> Unit) {
 }
 
 @Composable
-fun SeriesAndComicsCard(item: SeriesAndComicsDomain, vm: MainViewModel) {
+fun SeriesAndComicsCard(item: String, vm: MainViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,7 +89,7 @@ fun SeriesAndComicsCard(item: SeriesAndComicsDomain, vm: MainViewModel) {
                     color = Color.White,
                     fontSize = 18.sp
                 ),
-                text = item.name
+                text = item
             )
         }
     }

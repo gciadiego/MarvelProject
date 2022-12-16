@@ -1,4 +1,4 @@
-package com.example.marvelproject.presentation.view
+package com.example.marvelproject.ui.theme.view
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
@@ -6,8 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.marvelproject.data.implementation.MarvelApiRepository
+import com.example.marvelproject.R
+import com.example.marvelproject.domain.interfaces.IApiRepository
 import com.example.marvelproject.domain.model.CharacterDomain
+import com.example.marvelproject.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val marvelApiRepository: MarvelApiRepository) : ViewModel() {
+//It was injecting the Impl instead of the repository
+class MainViewModel @Inject constructor(private val marvelApiRepository: IApiRepository) : ViewModel() {
     private var _list = mutableStateListOf<CharacterDomain>()
     val list: SnapshotStateList<CharacterDomain>
         get() = _list
@@ -32,6 +35,10 @@ class MainViewModel @Inject constructor(private val marvelApiRepository: MarvelA
     val loading: State<Boolean>
         get() = _loading
 
+    private var _error = mutableStateOf<String>("")
+    val error : State<String>
+        get() = _error
+
     init{
         getCharacters()
     }
@@ -42,15 +49,25 @@ class MainViewModel @Inject constructor(private val marvelApiRepository: MarvelA
         viewModelScope.launch(Dispatchers.IO) {
             delay(1000)
 
-            val response = marvelApiRepository.getCharacters()
+            when(val response = marvelApiRepository.getCharacters()){
+                is Resource.Success -> response.data.let {
+                    _list.clear()
+                    _list.addAll(it)
+                    _loading.value = false
+                }
+                is Resource.Failure ->{
+                    _loading.value = false
+                    _error.value = "Error, couldn't load the MARVEL characters."
+                }
+            }
 
-            if(response.isNotEmpty()){
+           /* if(response.isNotEmpty()){
                 _loading.value = false
                 _list.clear()
                 _list.addAll(response)
             }else{
                 print("Error in API call")
-            }
+            }*/
         }
     }
 
@@ -60,5 +77,9 @@ class MainViewModel @Inject constructor(private val marvelApiRepository: MarvelA
 
     fun setButtonSelected(btn: String) {
         _buttonSelected.value = btn
+    }
+
+    fun setErrorAsEmpty(){
+        _error.value = ""
     }
 }

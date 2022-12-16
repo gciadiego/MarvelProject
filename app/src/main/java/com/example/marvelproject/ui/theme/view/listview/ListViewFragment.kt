@@ -1,4 +1,4 @@
-package com.example.marvelproject.presentation.view.listview
+package com.example.marvelproject.ui.theme.view.listview
 
 import android.content.Context
 import android.content.Intent
@@ -26,22 +26,30 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.marvelproject.R
 import com.example.marvelproject.domain.model.CharacterDomain
-import com.example.marvelproject.presentation.view.MainViewModel
+import com.example.marvelproject.ui.theme.view.MainViewModel
 import com.example.marvelproject.ui.theme.Background
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun ListView(vm: MainViewModel, navigateToDetails: () -> Unit) {
     val context = LocalContext.current
+    /*val isLoading = vm.loading.value
+    val viewModel = viewModel<MainViewModel>()
+    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isLoading)*/
 
     val lazyList = remember {
         vm.list
     }
 
     val loading = vm.loading
+   /* SwipeRefresh(state = swipeRefreshState, onRefresh = viewModel :: getCharacter){
 
+    }*/
     Box(
         modifier = Modifier
             .background(Background)

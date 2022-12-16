@@ -1,4 +1,4 @@
-package com.example.marvelproject.presentation.view.navigation
+package com.example.marvelproject.ui.theme.view.navigation
 
 sealed class MarvelProjectViews(val route: String){
     object ListView: MarvelProjectViews("list_view")

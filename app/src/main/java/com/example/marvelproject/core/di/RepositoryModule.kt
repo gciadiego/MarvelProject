@@ -1,6 +1,6 @@
 package com.example.marvelproject.core.di
 
-import com.example.marvelproject.data.implementation.MarvelApiRepository
+import com.example.marvelproject.data.implementation.MarvelApiRepositoryImpl
 import com.example.marvelproject.domain.interfaces.IApiRepository
 import dagger.Binds
 import dagger.Module
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 abstract class RepositoryModule{
     @Singleton
     @Binds
-    abstract fun provideApiMarvelRepository(implementation: MarvelApiRepository): IApiRepository
+    abstract fun provideApiMarvelRepository(implementation: MarvelApiRepositoryImpl): IApiRepository
 }
