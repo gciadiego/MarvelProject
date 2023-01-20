@@ -32,15 +32,19 @@ import com.example.marvelproject.ui.theme.CardLeftColor
 import com.example.marvelproject.ui.theme.CardRightColor
 import com.example.marvelproject.ui.theme.CardSeparator
 import com.example.marvelproject.presentation.view.MainViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun DetailView(vm: MainViewModel, navigateToList: () -> Unit) {
+fun DetailView(vm: MainViewModel,
+               vmKoin: MainViewModel = koinViewModel(),
+               navigateToList: () -> Unit) {
+
     val lazyList = remember {
-        if(vm.buttonSelected.value == "Series"){
-            vm.currentCharacter.value?.series
+        if(vmKoin.buttonSelected.value == "Series"){
+            vmKoin.currentCharacter.value?.series
         }
         else{
-           vm.currentCharacter.value?.comics
+           vmKoin.currentCharacter.value?.comics
         }
     }
 
@@ -57,13 +61,13 @@ fun DetailView(vm: MainViewModel, navigateToList: () -> Unit) {
                     color = Color.White,
                     fontSize = 22.sp
                 ),
-                text = vm.buttonSelected.value
+                text = vmKoin.buttonSelected.value
             )
 
             LazyColumn {
                 lazyList?.let {
                     items(it){
-                        item -> SeriesAndComicsCard(item, vm)
+                        item -> SeriesAndComicsCard(item, vmKoin)
                     }
                 }
             }
@@ -72,7 +76,9 @@ fun DetailView(vm: MainViewModel, navigateToList: () -> Unit) {
 }
 
 @Composable
-fun SeriesAndComicsCard(item: SeriesAndComicsDomain, vm: MainViewModel) {
+fun SeriesAndComicsCard(item: SeriesAndComicsDomain,
+                        //vm: MainViewModel,
+                        vmKoin: MainViewModel = koinViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

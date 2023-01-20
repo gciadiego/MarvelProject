@@ -31,16 +31,20 @@ import com.example.marvelproject.R
 import com.example.marvelproject.domain.model.CharacterDomain
 import com.example.marvelproject.presentation.view.MainViewModel
 import com.example.marvelproject.ui.theme.Background
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ListView(vm: MainViewModel, navigateToDetails: () -> Unit) {
+fun ListView(//vm: MainViewModel,
+             vmKoin: MainViewModel = koinViewModel(),
+             navigateToDetails: () -> Unit) {
     val context = LocalContext.current
 
     val lazyList = remember {
-        vm.list
+        //vm.list
+        vmKoin.list
     }
 
-    val loading = vm.loading
+    val loading = vmKoin.loading
 
     Box(
         modifier = Modifier
@@ -58,7 +62,7 @@ fun ListView(vm: MainViewModel, navigateToDetails: () -> Unit) {
                     .fillMaxSize()
             ) {
                 items(lazyList) { character ->
-                    CharacterCard(character, navigateToDetails, vm, context)
+                    CharacterCard(character, navigateToDetails, vmKoin, context)
                 }
             }
         }
@@ -66,7 +70,11 @@ fun ListView(vm: MainViewModel, navigateToDetails: () -> Unit) {
 }
 
 @Composable
-fun CharacterCard(character: CharacterDomain, navigateToDetails: () -> Unit, vm: MainViewModel, context: Context) {
+fun CharacterCard(character: CharacterDomain,
+                  navigateToDetails: () -> Unit,
+                  //vm: MainViewModel,
+                  vmKoin: MainViewModel = koinViewModel(),
+                  context: Context) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -130,8 +138,8 @@ fun CharacterCard(character: CharacterDomain, navigateToDetails: () -> Unit, vm:
                         ),
                         text = AnnotatedString(stringResource(id = R.string.series_label)),
                         onClick = {
-                            vm.setButtonSelected("Series")
-                            vm.setCurrentCharacter(character)
+                            vmKoin.setButtonSelected("Series")
+                            vmKoin.setCurrentCharacter(character)
                             navigateToDetails.invoke()
                         }
                     )
@@ -145,8 +153,8 @@ fun CharacterCard(character: CharacterDomain, navigateToDetails: () -> Unit, vm:
                         ),
                         text = AnnotatedString(stringResource(id = R.string.comics_label)),
                         onClick = {
-                            vm.setButtonSelected("Comics")
-                            vm.setCurrentCharacter(character)
+                            vmKoin.setButtonSelected("Comics")
+                            vmKoin.setCurrentCharacter(character)
                             navigateToDetails.invoke()
                         }
                     )
@@ -160,7 +168,7 @@ fun CharacterCard(character: CharacterDomain, navigateToDetails: () -> Unit, vm:
                         ),
                         text = AnnotatedString(stringResource(id = R.string.details_label)),
                         onClick = {
-                            vm.setCurrentCharacter(character)
+                            vmKoin.setCurrentCharacter(character)
 
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(character.detail))
                             context.startActivity(intent)
