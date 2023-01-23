@@ -18,7 +18,6 @@ import com.example.marvelproject.presentation.view.navigation.MarvelProjectViews
 import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +25,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             MarvelProjectTheme {
                 val navController = rememberNavController()
-                val vm = hiltViewModel<MainViewModel>()
                 //ViewModel injection with Koin
                 val vmKoin: MainViewModel by viewModel()
 

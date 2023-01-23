@@ -35,8 +35,7 @@ import com.example.marvelproject.presentation.view.MainViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun DetailView(vm: MainViewModel,
-               vmKoin: MainViewModel = koinViewModel(),
+fun DetailView(vmKoin: MainViewModel = koinViewModel(),
                navigateToList: () -> Unit) {
 
     val lazyList = remember {

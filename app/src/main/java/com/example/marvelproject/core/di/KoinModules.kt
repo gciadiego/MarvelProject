@@ -17,7 +17,6 @@ import java.math.BigInteger
 import java.security.MessageDigest
 import java.sql.Timestamp
 
-
 //Defining API Module
 val apiModule = module {
     fun provideApi(retrofit: Retrofit): IMarvelApi {
@@ -61,7 +60,6 @@ val networkModule = module {
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-
     }
 
     single { provideOkHttp()}

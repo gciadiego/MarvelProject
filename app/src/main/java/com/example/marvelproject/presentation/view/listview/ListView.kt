@@ -34,8 +34,7 @@ import com.example.marvelproject.ui.theme.Background
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ListView(//vm: MainViewModel,
-             vmKoin: MainViewModel = koinViewModel(),
+fun ListView(vmKoin: MainViewModel = koinViewModel(),
              navigateToDetails: () -> Unit) {
     val context = LocalContext.current
 

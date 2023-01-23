@@ -14,8 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor(private val marvelApiRepository: MarvelApiRepository) : ViewModel() {
+class MainViewModel (private val marvelApiRepository: MarvelApiRepository) : ViewModel() {
     private var _list = mutableStateListOf<CharacterDomain>()
     val list: SnapshotStateList<CharacterDomain>
         get() = _list

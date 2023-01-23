@@ -6,7 +6,7 @@ import com.example.marvelproject.domain.interfaces.IApiRepository
 import com.example.marvelproject.domain.model.CharacterDomain
 import javax.inject.Inject
 
-class MarvelApiRepository @Inject constructor(private val marvelApi: IMarvelApi): IApiRepository {
+class MarvelApiRepository (private val marvelApi: IMarvelApi): IApiRepository {
     override suspend fun getCharacters(): List<CharacterDomain>{
         val response = marvelApi.getCharacters()
 
